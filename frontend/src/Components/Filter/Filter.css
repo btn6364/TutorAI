@@ -1,0 +1,7 @@
+.filter{
+    display: flex;
+    flex-flow: row;
+}
+.filter div{
+    margin-left: 15px;
+}
