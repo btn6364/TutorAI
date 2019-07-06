@@ -27,7 +27,7 @@ const Navbar = (props) =>{
                 }
             </nav>{
             (filterState===true)?
-            <Filter/>:null}
+            <Filter filterState={props.filterState} filterSet={props.filterSet}/>:null}
         </>
         )
 };

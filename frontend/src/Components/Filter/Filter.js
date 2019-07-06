@@ -4,8 +4,10 @@ import FilterBox from '../FilterBox/FilterBox';
 const subjects=["All Subjects","Maths","English"];
 const prices=["All price","below $5/hour","below $6/hour","below $7/hour","below $8/hour"];
 const locations=["All locations","Hanoi","Danang","HCM City"];
-const Filter = ()=>{
-    const [filterState,filterSet]=useState(['All subjects','All price range','All locations'])
+const Filter = (props)=>{
+    
+    let filterState=props.filterState;
+    let filterSet=props.filterSet;
     const setFilter = (index,value)=>{
         filterSet( prev=>{
             return prev.map((val,idx)=>{
