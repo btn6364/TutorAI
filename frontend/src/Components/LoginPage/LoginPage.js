@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 const onClickHandle = (email,pwd,firebase,tg)=>{
@@ -24,15 +26,32 @@ const LoginPageBase  = (props)=>{
     const [pwd,setPwd]=useState("");
    
     return (
-        <div>
-            <label>Email</label>
-            <input onChange={(e)=>{setEmail(e.target.value);}} type="text" id="email"></input>
-            <label>Password</label>
-            <input onChange={(e)=>{setPwd(e.target.value);}} type="password" id="pwd"></input>
-            <Link to="/" onClick={()=>{
+    <div className="container">
+        <h1>Login Page!</h1>
+        <Form className="jumbotron">
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control onChange={(e)=>{setEmail(e.target.value);}} type="email" placeholder="Enter email" />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control onChange={(e)=>{setPwd(e.target.value);}} type="password" placeholder="Password" />
+            </Form.Group>
+            <Button variant="primary" type="submit"><Link to="/" style={{color:'white'}} onClick={()=>{
                 onClickHandle(email,pwd,props.firebase,props.toogle);
-            }}>Log in</Link>
-        </div>
+            }}>Login</Link></Button>
+        </Form>
+    </div>
+//        <div>
+//            <label>Email</label>
+//            <input onChange={(e)=>{setEmail(e.target.value);}} type="text" id="email"></input>
+//            <label>Password</label>
+//            <input onChange={(e)=>{setPwd(e.target.value);}} type="password" id="pwd"></input>
+//            <Link to="/" onClick={()=>{
+//                onClickHandle(email,pwd,props.firebase,props.toogle);
+//            }}>Login</Link>
+//        </div>
     )
 };
 const LoginPage=withFirebase(LoginPageBase);
