@@ -6,17 +6,38 @@ import Navbar from './Components/Navbar/Navbar';
 import ChatBox from './Components/ChatBox/ChatBox';
 import LoginPage from './Components/LoginPage/LoginPage';
 import SignUpPage from './Components/SignUpPage/SignUpPage';
+import TutorList from './Components/TutorList/TutorList';
+const listOfTutor=[{"first_name":"Khanh",
+"last_name":"Le",
+"email":"a@gmail.com",
+"subject":"Math",
+"location":"Danang",
+"price":"5"},{"first_name":"Khanh",
+"last_name":"Le",
+"email":"a@gmail.com",
+"subject":"Math",
+"location":"Danang",
+"price":"5"},{"first_name":"Khanh",
+"last_name":"Le",
+"email":"a@gmail.com",
+"subject":"Math",
+"location":"Danang",
+"price":"5"},{"first_name":"Khanh",
+"last_name":"Le",
+"email":"a@gmail.com",
+"subject":"Math",
+"location":"Danang",
+"price":"5"},]
 const MainApp = (props) =>{
   const log=props.toogle;
 
   return (
     <div className="App">
-      
         <div>
           <Navbar loggedIn={props.auth} toogle={log}/>
         </div>
         <div className="app-lower-part">
-          <div> A</div>
+          <div className="list-of-tutor"> <TutorList listOfTutors={listOfTutor}/> </div>
           <div> <ChatBox/></div>
         </div>    
     </div>
