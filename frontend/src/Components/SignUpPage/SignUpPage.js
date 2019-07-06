@@ -41,20 +41,12 @@ const SignUpPageComponent  = (props)=>{
                 <Form.Control onChange={(e)=>{setPwd(e.target.value);}} type="password" placeholder="Password" id="pwd"/>
             </Form.Group>
 
-            <Button variant="success" type="submit"><Link to="/login" style={{color:'white'}} onClick={()=>{
+            <Link to="/login" style={{color:'white'}} onClick={()=>{
                     onClickHandle(email,pwd,props.firebase);
-                    }}>Sign Up</Link></Button>
+                    }}><Button variant="success">Sign Up</Button></Link>
         </Form>
     </div>
-//        <div>
-//            <label>Email</label>
-//            <input onChange={(e)=>{setEmail(e.target.value);}} type="text" id="email"></input>
-//            <label>Password</label>
-//            <input onChange={(e)=>{setPwd(e.target.value);}} type="password" id="pwd"></input>
-//            <Link to="/login" onClick={()=>{
-//                onClickHandle(email,pwd,props.firebase);
-//            }}>Sign Up</Link>
-//        </div>
+
     )
 };
 const SignUpPage = withFirebase(SignUpPageComponent);

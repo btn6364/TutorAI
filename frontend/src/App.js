@@ -33,8 +33,9 @@ const fetchData = (setter1,setter2) =>{
     response=>{
       const data=response.data.data;
       const jsondata=JSON.parse(data);
-        setter1(jsondata.map(data=>data.fields));        
-        setter2(false);
+      setter2(false);
+      setter1(jsondata.map(data=>data.fields));        
+        
     }
   ).catch(err=>{console.log(err);})
 }
@@ -52,7 +53,7 @@ const MainApp = (props) =>{
           {(props.isLoading===true)?
           <div> Loading</div>:
           <div className="list-of-tutor"> <TutorList listOfTutors={props.listOfTutor}/> </div>}
-          <div> <ChatBox/></div>
+          <div> {(props.auth===true)?<ChatBox/>:null}</div>
         </div>    
     </div>
   )
@@ -62,8 +63,9 @@ function App() {
   const [isLoading,toogleLoading]=useState(true);
   const [listOfTutor,setList]=useState([]);
   const [filterState,filterSet]=useState(['All subjects',0,100,'All locations']);
+  
   console.log(auth);
-  fetchData(setList,toogleLoading);
+  if (isLoading===true) fetchData(setList,toogleLoading);
   return (
     <BrowserRouter>
         <Switch>
