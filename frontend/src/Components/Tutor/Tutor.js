@@ -11,8 +11,7 @@ const Tutor = (props)=>{
                     Subject: {props.tutor.subject} <br></br>
                     Price: {props.tutor.price}/hour
                 </p>
-                <a href="#" className="card-link">Card link</a>
-                <a href="#" className="card-link">Another link</a>
+                
             </div>
         </div>
     )

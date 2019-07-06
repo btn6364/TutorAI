@@ -1,34 +1,32 @@
 import React,{useState} from 'react';
 import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import ChatBox from './Components/ChatBox/ChatBox';
 import LoginPage from './Components/LoginPage/LoginPage';
 import SignUpPage from './Components/SignUpPage/SignUpPage';
 import TutorList from './Components/TutorList/TutorList';
-const listOfTutor=[{"first_name":"Khanh",
-"last_name":"Le",
-"email":"a@gmail.com",
-"subject":"Math",
-"location":"Danang",
-"price":"5"},{"first_name":"Khanh",
-"last_name":"Le",
-"email":"a@gmail.com",
-"subject":"Math",
-"location":"Danang",
-"price":"5"},{"first_name":"Khanh",
-"last_name":"Le",
-"email":"a@gmail.com",
-"subject":"Math",
-"location":"Danang",
-"price":"5"},{"first_name":"Khanh",
-"last_name":"Le",
-"email":"a@gmail.com",
-"subject":"Math",
-"location":"Danang",
-"price":"5"},];
+
+const filterTutor = (list,req)=>{
+  if (req[2]<req[1]) req[2]=req[1];
+  const f1=list.filter(tutor=>{
+    return (tutor.price>=req[1] && tutor.price<=req[2]);
+  })
+  let f2;
+  if (req[0]==="All subjects") f2=f1;
+  else f2=f1.filter(tutor=>{
+    return (tutor.subject.toLowerCase()===req[1].toLowerCase());
+  })
+  let f3;
+  if (req[3]==="All locations") f3=f2;
+  else f3=f2.filter(tutor =>{
+    return (tutor.location.toLowerCase()===req[3].toLowerCase());
+  });
+  return f3;
+}
+
+
 const fetchData = (setter1,setter2) =>{
   axios.get("http://127.0.0.1:8000/tutors/").
   then(
@@ -63,16 +61,15 @@ function App() {
   const [auth,log]=useState(false); 
   const [isLoading,toogleLoading]=useState(true);
   const [listOfTutor,setList]=useState([]);
-  const [filterState,filterSet]=useState(['All subjects','All price range','All locations'])
+  const [filterState,filterSet]=useState(['All subjects',0,100,'All locations']);
   console.log(auth);
   fetchData(setList,toogleLoading);
   return (
-    
     <BrowserRouter>
         <Switch>
           <Route exact path="/" render={
             (routeProps)=>(
-              <MainApp auth={auth} toogle={log} listOfTutor={listOfTutor} isLoading={isLoading}
+              <MainApp auth={auth} toogle={log} listOfTutor={filterTutor(listOfTutor,filterState)} isLoading={isLoading}
               filterState={filterState} filterSet={filterSet}
               />
             )
