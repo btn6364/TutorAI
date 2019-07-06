@@ -7,7 +7,7 @@ import ChatBox from './Components/ChatBox/ChatBox';
 import LoginPage from './Components/LoginPage/LoginPage';
 import SignUpPage from './Components/SignUpPage/SignUpPage';
 import TutorList from './Components/TutorList/TutorList';
-
+let ttload=0,bl=0;
 const filterTutor = (list,req)=>{
   if (req[2]<req[1]) req[2]=req[1];
   const f1=list.filter(tutor=>{
@@ -37,7 +37,7 @@ const fetchData = (setter1,setter2) =>{
       setter1(jsondata.map(data=>data.fields));        
         
     }
-  ).catch(err=>{console.log(err);})
+  ).catch(err=>{console.log(err);ttload=0;})
 }
 const MainApp = (props) =>{
   const log=props.toogle;
@@ -53,26 +53,37 @@ const MainApp = (props) =>{
           {(props.isLoading===true)?
           <div> Loading</div>:
           <div className="list-of-tutor"> <TutorList listOfTutors={props.listOfTutor}/> </div>}
-          <div> {(props.auth===true)?<ChatBox/>:null}</div>
+          <div> {(props.auth===true)?<ChatBox ready={props.ready}/>:null}</div>
         </div>    
     </div>
   )
 }
 function App() {
+  
   const [auth,log]=useState(false); 
   const [isLoading,toogleLoading]=useState(true);
   const [listOfTutor,setList]=useState([]);
   const [filterState,filterSet]=useState(['All subjects',0,100,'All locations']);
-  
+  const [loadBot,setBot]=useState(true);
   console.log(auth);
-  if (isLoading===true) fetchData(setList,toogleLoading);
+  if (ttload===0) {ttload=1;fetchData(setList,toogleLoading);}
+  if (bl===0) {
+    bl=1;
+    axios.get("http://127.0.0.1:8000/VA/init/").
+  then(
+    response=>{
+      console.log(response);
+      setBot(true);
+    }
+  ).catch(err=>{console.log(err);bl=0;});
+  }
   return (
     <BrowserRouter>
         <Switch>
           <Route exact path="/" render={
             (routeProps)=>(
               <MainApp auth={auth} toogle={log} listOfTutor={filterTutor(listOfTutor,filterState)} isLoading={isLoading}
-              filterState={filterState} filterSet={filterSet}
+              filterState={filterState} filterSet={filterSet} ready={loadBot}
               />
             )
           }
