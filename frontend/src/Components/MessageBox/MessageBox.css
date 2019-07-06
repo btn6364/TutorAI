@@ -1,0 +1,29 @@
+.chat-box-component{
+    height: 90%;
+    overflow: auto;
+    scroll-behavior: smooth;
+    width: 80%;
+    margin-left: 10%;
+    border: 1px solid gray;
+}
+
+.me{
+    text-align: left;
+    background: lightblue;
+    width:max-content;
+    max-width: 80%;
+    
+    margin-right: 0;
+    margin-left: auto;
+    word-break: break-word;
+    margin-top: 10px;
+}
+.bot{
+    text-align: left;
+    background: lightcoral;
+    width:max-content;
+    max-width: 80%;
+    word-break: break-word;
+    margin-left: 0;
+    margin-top: 10px;
+}
