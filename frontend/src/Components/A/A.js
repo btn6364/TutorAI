@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 
 import axios from "axios";
@@ -21,7 +20,7 @@ export default class Book extends Component {
     const promise = await axios.get("http://127.0.0.1:8000/");
     const status = promise.status;
     if(status===200)
-    {
+    { 
       const data = promise.data.data;
       this.setState({books:data});
     }
