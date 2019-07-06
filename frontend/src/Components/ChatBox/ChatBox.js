@@ -3,6 +3,7 @@ import './ChatBox.css';
 import MessageBox from '../MessageBox/MessageBox';
 import InputField from '../InputField/InputField';
 import axios from 'axios';
+let firstMess=0;
 const Chatbox = ()=>{
     const [isLoading,setLoading] = useState(false);
     const [listOfMess,setMess]=useState([]);
@@ -12,6 +13,7 @@ const Chatbox = ()=>{
         })
     };
     const handleClick = (message,classname) =>{
+        if (message==="" && firstMess!==0) return;
         addMessage(message,classname);
         axios.post("http://127.0.0.1:8000/VA/run/",{
             "text":message
@@ -27,11 +29,16 @@ const Chatbox = ()=>{
     }
   ).catch(err=>{console.log(err);})
     }
+    if (firstMess===0)
+    {
+        handleClick("","me");
+        firstMess=1;
+    }
     return(
-        <>
+        <div className="chat-box" >
             <MessageBox messages={listOfMess}/>
             <InputField onClickHandle={handleClick}/>
-        </>
+        </div>
     )
 }
 export default Chatbox;
