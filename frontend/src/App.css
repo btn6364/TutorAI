@@ -8,4 +8,8 @@
   display: grid;
   grid-template-columns: 3fr 2fr;
 }
+.list-of-tutor{
+  overflow-y: scroll;
+  height: 75vh;
+}
 
