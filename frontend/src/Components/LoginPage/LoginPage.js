@@ -38,20 +38,11 @@ const LoginPageBase  = (props)=>{
                 <Form.Label>Password</Form.Label>
                 <Form.Control onChange={(e)=>{setPwd(e.target.value);}} type="password" placeholder="Password" />
             </Form.Group>
-            <Button variant="primary" type="submit"><Link to="/" style={{color:'white'}} onClick={()=>{
+            <Link to="/" style={{color:'white'}} onClick={()=>{
                 onClickHandle(email,pwd,props.firebase,props.toogle);
-            }}>Login</Link></Button>
+            }}><Button variant="primary" >Login</Button></Link>
         </Form>
     </div>
-//        <div>
-//            <label>Email</label>
-//            <input onChange={(e)=>{setEmail(e.target.value);}} type="text" id="email"></input>
-//            <label>Password</label>
-//            <input onChange={(e)=>{setPwd(e.target.value);}} type="password" id="pwd"></input>
-//            <Link to="/" onClick={()=>{
-//                onClickHandle(email,pwd,props.firebase,props.toogle);
-//            }}>Login</Link>
-//        </div>
     )
 };
 const LoginPage=withFirebase(LoginPageBase);
