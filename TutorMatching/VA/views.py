@@ -50,9 +50,6 @@ def message(request):
     filter_subject = ''
     filter_location = ''
     intents = response['output']['intents']
-    print("First")
-    print(intents)
-    print("Second")
     if len(intents):
         intent = intents[0]['intent']
         if intent == 'tutor_subject':
@@ -60,19 +57,15 @@ def message(request):
             for en in entities:
                 if en['entity'] == 'subjects':
                     value = en['value']
-                if value in ['Math', 'English', 'Physics']:
-                    filter_subject = value
+                    if value in ['Math', 'English', 'Physics']:
+                        filter_subject = value
         if intent == 'tutor_location':
             entities = response['output']['entities']
             for en in entities:
                 if en['entity'] == 'location':
                     value = en['value']
-                if value in ['Da Nang', 'Ha Noi', 'Ho Chi Minh']:
-                    filter_location = value
-
-
-
-
+                    if value in ['Da Nang', 'Ha Noi', 'Ho Chi Minh']:
+                        filter_location = value
     repliedMessage=response['output']['generic']
     if (len(repliedMessage)==0):
         repliedMessage="I don't understand"
