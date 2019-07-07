@@ -32,9 +32,11 @@ const Chatbox = (props)=>{
       )
     }
   ).catch(err=>{console.log(err);
+    firstMess = 0;
     axios.get("http://127.0.0.1:8000/VA/init/").
   then(
     response=>{
+
       console.log(response);
       
     }

@@ -7,6 +7,7 @@ import ibm_watson
 service=ibm_watson.AssistantV2(
     version='2019-02-28',
     username='apikey',
+    # password='VB1diOBzfNOZPFFdferizwuNM4QSvWxtzemBwCAIZGkC',
     password='VB1diOBzfNOZPFFdferizwuNM4QSvWxtzemBwCAIZGkC',
     url='https://gateway.watsonplatform.net/assistant/api/'
 
@@ -18,7 +19,8 @@ gsession_id= ''
 @api_view(["GET"])
 def createSession(request):
     response = service.create_session(
-        assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f'
+        # assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f'
+        assistant_id='90e73ccd-45b1-47e7-a878-43ddd6c7f6a5',
     ).get_result()
     global gsession_id
     gsession_id = response['session_id']
@@ -26,8 +28,10 @@ def createSession(request):
 @api_view(["POST"])
 def message(request):
     incomingMessage=str(request.body)[11:-3]
+    print(incomingMessage)
     response = service.message(
-    assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f',
+    # assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f',
+    assistant_id='90e73ccd-45b1-47e7-a878-43ddd6c7f6a5',
     session_id= gsession_id,
     input={
         'message_type': 'text',
@@ -37,9 +41,6 @@ def message(request):
     print("X")
     print(response)
     print("Y")
-
-
-
 
 
 
