@@ -38,8 +38,10 @@ def message(request):
     print(response)
     print("Y")
     repliedMessage=response['output']['generic']
+    print(len(repliedMessage))
     if (len(repliedMessage)==0):
         repliedMessage="I don't understand"
     else:
-        repliedMessage=repliedMessage    
+        repliedMessage=repliedMessage 
+
     return Response(status=status.HTTP_200_OK, data={"data":repliedMessage})

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
@@ -7,6 +7,7 @@ import ChatBox from './Components/ChatBox/ChatBox';
 import LoginPage from './Components/LoginPage/LoginPage';
 import SignUpPage from './Components/SignUpPage/SignUpPage';
 import TutorList from './Components/TutorList/TutorList';
+import { withFirebase } from './Components/Firebase';
 let ttload=0,bl=0;
 const filterTutor = (list,req)=>{
   if (req[2]<req[1]) req[2]=req[1];
@@ -45,7 +46,7 @@ const MainApp = (props) =>{
   return (
     <div className="App">
         <div>
-          <Navbar loggedIn={props.auth} toogle={log}
+          <Navbar loggedIn={props.auth}
           filterState={props.filterState} filterSet={props.filterSet}
           />
         </div>
@@ -58,13 +59,26 @@ const MainApp = (props) =>{
     </div>
   )
 }
-function App() {
-  
+function AppBase(props) {
   const [auth,log]=useState(false); 
   const [isLoading,toogleLoading]=useState(true);
   const [listOfTutor,setList]=useState([]);
   const [filterState,filterSet]=useState(['All subjects',0,100,'All locations']);
   const [loadBot,setBot]=useState(true);
+  useEffect(()=>{
+    props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? log(true)
+        : log(false);
+    });
+    axios.get("http://127.0.0.1:8000/VA/init/").
+  then(
+    response=>{
+      console.log(response);
+      setBot(true);
+    }
+  ).catch(err=>{console.log(err);bl=0;});
+  })
   console.log(auth);
   if (ttload===0) {ttload=1;fetchData(setList,toogleLoading);}
   if (bl===0) {
@@ -98,5 +112,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
+const App=withFirebase(AppBase);
 export default App;
