@@ -38,28 +38,13 @@ def message(request):
     print(response)
     print("Y")
 
-    #if filter_location == '', return all locations available
-    # filter_location = ''
-    # filter_subject = ''
-    # intents = response['output']['intents']
-    # entities = response['output']['entities']
-    # if len(intents):
-    #     intent = intents[0]['intent']
-    #     if intent == 'tutor_location':
-    #         value = entities[0]['value']
-    #         if value in ['Da Nang', 'Ha Noi', 'Ho Chi Minh']:
-    #             filter_location = value
-    #             print(filter_location)
-    #     if intent == 'tutor_subject':
-    #         value = entities[1]['value']
-    #         if value in ['Math', 'English', 'Physics']:
-    #             filter_subject = value
-    #             print(filter_subject)
+
 
 
 
 
     repliedMessage=response['output']['generic']
+    print(len(repliedMessage))
     if (len(repliedMessage)==0):
         repliedMessage="I don't understand"
     else:

@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import './Navbar.css';
 import Filter from '../Filter/Filter';
 import {Link} from 'react-router-dom';
+import {withFirebase} from '../Firebase';
 
-const Navbar = (props) =>{
+const NavbarBase = (props) =>{
     const [filterState,filterToogle]=useState(false);
     return (
         <>
@@ -17,7 +18,7 @@ const Navbar = (props) =>{
                 {(props.loggedIn===true)?
                 <button onClick={
                     ()=>{
-                        props.toogle(prev=>{return false;});
+                        props.firebase.doSignOut();
                     }
                 } className="btn btn-outline-success my-2 my-sm-0"> Log out </button>:<div>
 
@@ -31,4 +32,5 @@ const Navbar = (props) =>{
         </>
         )
 };
+const Navbar=withFirebase(NavbarBase);
 export default Navbar;

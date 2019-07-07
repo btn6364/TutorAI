@@ -4,7 +4,7 @@ import MessageBox from '../MessageBox/MessageBox';
 import InputField from '../InputField/InputField';
 import axios from 'axios';
 let firstMess=0;
-const Chatbox = ()=>{
+const Chatbox = (props)=>{
     const [isLoading,setLoading] = useState(false);
     const [listOfMess,setMess]=useState([]);
     const addMessage = (message,classname) =>{
@@ -13,7 +13,9 @@ const Chatbox = ()=>{
         })
     };
     const handleClick = (message,classname) =>{
+        if (props.ready===false) return;
         if (message==="" && firstMess!==0) return;
+        firstMess=1;
         addMessage(message,classname);
         axios.post("http://127.0.0.1:8000/VA/run/",{
             "text":message
@@ -21,18 +23,28 @@ const Chatbox = ()=>{
   then(
     response=>{
       console.log(response.data.data);
+      if (response.data.data==="I don't understand") addMessage(response.data.data,'bot');
+      else
       response.data.data.forEach(
           mess=>{
               addMessage(mess['text'],'bot');
           }
       )
     }
-  ).catch(err=>{console.log(err);})
+  ).catch(err=>{console.log(err);
+    axios.get("http://127.0.0.1:8000/VA/init/").
+  then(
+    response=>{
+      console.log(response);
+      
+    }
+  ).catch(err=>{console.log(err);});
+
+})
     }
     if (firstMess===0)
     {
         handleClick("","me");
-        firstMess=1;
     }
     return(
         <div className="chat-box" >
