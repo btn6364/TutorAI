@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 import json
 import ibm_watson
-
+isInit=False
 service=ibm_watson.AssistantV2(
     version='2019-02-28',
     username='apikey',
@@ -17,14 +17,22 @@ gsession_id= ''
 # This will return a list of books
 @api_view(["GET"])
 def createSession(request):
+    global isInit
+    if (isInit==True):
+        return Response(status=status.HTTP_200_OK, data={"data":"Already"})
+    isInit=False
     response = service.create_session(
         assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f'
     ).get_result()
     global gsession_id
     gsession_id = response['session_id']
+    
+    
     return Response(status=status.HTTP_200_OK, data={"data":"Success"})
 @api_view(["POST"])
 def message(request):
+    global isInit
+    isInit=True
     incomingMessage=str(request.body)[11:-3]
     response = service.message(
     assistant_id='4b832497-d551-41cb-b8fe-3a3b58e8c02f',
@@ -37,12 +45,6 @@ def message(request):
     print("X")
     print(response)
     print("Y")
-
-
-
-
-
-
     repliedMessage=response['output']['generic']
     print(len(repliedMessage))
     if (len(repliedMessage)==0):
